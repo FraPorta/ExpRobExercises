@@ -10,7 +10,7 @@ from std_msgs.msg import String
 
 ## class PointingGestureGenerator
 # @param self The object pointer
-class PointingGestureGenerator(self):
+class PointingGestureGenerator():
     ## The constructor
     #  @param self The object pointer
     def __init__(self):

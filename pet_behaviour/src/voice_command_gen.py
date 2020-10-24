@@ -12,7 +12,7 @@ voice_command = "play"
 
 ## class VoiceCommandGenerator
 # @param self The object pointer
-class VoiceCommandGenerator(self):
+class VoiceCommandGenerator():
     ## The constructor
     #  @param self The object pointer
     def __init__(self):
