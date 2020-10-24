@@ -1,0 +1,9 @@
+<launch>
+
+    <param name="timescale" value="1" />
+    <node pkg="pet_behaviour" type="voice_command_gen.py" name="voice_command_generator" output="screen">
+    </node>
+    <node pkg="pet_behaviour" type="behaviour_controller.py" name="behaviour_controller" output="screen">
+    </node>
+    
+</launch>
