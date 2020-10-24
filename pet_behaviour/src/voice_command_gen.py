@@ -1,22 +1,26 @@
 #!/usr/bin/env python
+## @package voice_command_gen
+# a voice command generator (a string) with random delays
 
 import rospy
 import random
 from time import sleep
 from std_msgs.msg import String
 
+## voice command variable
 voice_command = "play"
+
 ## class VoiceCommandGenerator
-# 
+# @param self The object pointer
 class VoiceCommandGenerator(self):
     ## The constructor
     #  @param self The object pointer
     def __init__(self):
-        self.pub_command = rospy.Publisher()
+        self.pub_command = rospy.Publisher("/voice_command", String, queue_size=10)
         rospy.Subscriber("/behaviour", String, self.check_behaviour)
         
     ## Command publisher 
-    def publish_command(self,randtime):
+    def publish_command(self):
         if(self.behaviour == "normal"):
             self.pub_command.publish(voice_command)
 
@@ -26,14 +30,15 @@ class VoiceCommandGenerator(self):
 
 ## main
 def main():
+    ## init node
     rospy.init_node('voice_command_generator')
-    # get the timescale parameter to adjust simulation speed
+    ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
-    # instantiate class 
+    ## instantiate class 
     vcg = VoiceCommandGenerator()
-    # wait random time
+    ## wait random time
     sleep(timescale*random.randint(5,20))
-    # publish voice command
+    ## publish voice command
     vcg.publish_command()
 
     rospy.spin()

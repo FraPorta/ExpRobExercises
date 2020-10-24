@@ -1,6 +1,11 @@
 <launch>
 
     <param name="timescale" value="1" />
+    <param name="map_dimension_x" value="100" />
+    <param name="map_dimension_y" value="100" />
+    <param name="home_x" value="20" />
+    <param name="home_y" value="40" />
+
     <node pkg="pet_behaviour" type="voice_command_gen.py" name="voice_command_generator" output="screen">
     </node>
     <node pkg="pet_behaviour" type="behaviour_controller.py" name="behaviour_controller" output="screen">

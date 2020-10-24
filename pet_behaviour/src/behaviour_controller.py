@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+## @package behaviour_controller
+# state machine to control the behaviour of the pet
+
 import roslib
 import rospy
 import smach

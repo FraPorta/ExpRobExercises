@@ -1,3 +1,4 @@
+import rospy
 
 ## class Map
 # Map structure definition and functions
@@ -8,8 +9,10 @@ class PetMap(self):
         # initialization of dimension and positions on the Map
         self.actualX = 0
         self.actualY = 0
-        self.totalX = 100
-        self.totalY = 100
+        self.dimX = rospy.get_param("map_dimension_x")
+        self.dimY = rospy.get_param("map_dimension_y")
+        self.homeX = rospy.get_param("home_x")
+        self.homeY = rospy.get_param("home_y")
 
     ## updateMap
     # @param x X position
