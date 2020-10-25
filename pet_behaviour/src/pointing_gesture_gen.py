@@ -14,13 +14,13 @@ class PointingGestureGenerator():
     ## The constructor
     #  @param self The object pointer
     def __init__(self):
-        self.pub_command = rospy.Publisher("/pointing_position",IntList,queue_size=10)
+        self.pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=10)
         rospy.Subscriber("/behaviour", String, self.check_behaviour)
         
     ## gesture position publisher 
     def publish_position(self):
-        if(self.behaviour == "play"):
-            self.pub_command.publish(self.get_random_position())
+        #if(self.behaviour == "play"):
+        self.pub_command.publish(self.get_random_position())
 
     ## Subscriber callback gets behaviour value
     def check_behaviour(self,behaviour):

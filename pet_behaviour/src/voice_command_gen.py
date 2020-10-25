@@ -18,7 +18,8 @@ class VoiceCommandGenerator():
     def __init__(self):
         self.pub_command = rospy.Publisher("/voice_command", String, queue_size=10)
         rospy.Subscriber("/behaviour", String, self.check_behaviour)
-        
+        self.behaviour = "normal"
+
     ## Command publisher 
     def publish_command(self):
         if(self.behaviour == "normal"):
@@ -37,7 +38,7 @@ def main():
     ## instantiate class 
     vcg = VoiceCommandGenerator()
     ## wait random time
-    sleep(timescale*random.randint(5,20))
+    sleep(timescale*random.randint(1,20))
     ## publish voice command
     vcg.publish_command()
 
