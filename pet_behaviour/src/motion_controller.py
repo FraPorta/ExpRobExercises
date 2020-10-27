@@ -3,8 +3,6 @@
 ## @package motion controller
 # control the position of the pet in the map
 
-
-import roslib
 import rospy
 from time import sleep
 import random
@@ -43,8 +41,8 @@ def move_normal():
     pet_map.updateMap(randPos[0],randPos[1])
     ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
-    ## wait random time
-    sleep(timescale*2)
+    ## wait random time to simulate reaching the point
+    sleep(timescale*random.randint(5,15))
 
 ## method move_sleep
 # movement in the SLEEP state
@@ -54,7 +52,7 @@ def move_sleep():
     ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
     ## wait random time
-    sleep(timescale*random.randint(5,20))
+    sleep(timescale*random.randint(10,20))
         
 ## method move_play
 # movement in the PLAY state
@@ -70,11 +68,10 @@ def move_play():
 ## main function
 def main():
     rospy.init_node("motion_controller")
-
     rospy.Subscriber("/behaviour",String, get_behaviour)
     rospy.Subscriber("/goal_position",IntList, get_position)
     pub = rospy.Publisher("/actual_position",IntList,queue_size=5)
-    rate = rospy.Rate(0.1)
+    rate = rospy.Rate(1)
 
     while not rospy.is_shutdown():
         #rospy.loginfo(rospy.get_caller_id()+" behaviour: %s",behaviour)
@@ -90,6 +87,7 @@ def main():
             else:
                 if(behaviour == "play"):
                     move_play()
+                    rospy.loginfo(rospy.get_caller_id()+" actual_position: [%d,%d]",pet_map.actualX, pet_map.actualY)
 
         
         ## publish the actual position

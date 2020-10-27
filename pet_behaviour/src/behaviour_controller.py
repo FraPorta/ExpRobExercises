@@ -3,7 +3,6 @@
 ## @package behaviour_controller
 # state machine to control the behaviour of the pet
 
-import roslib
 import rospy
 import smach
 import smach_ros
@@ -25,28 +24,27 @@ class Normal(smach.State):
                             )
         
         self.command_received = False
-        self.rate = rospy.Rate(1)  # Loop at 1Hz
+        self.rate = rospy.Rate(100)  # Loop at 100Hz
 
     ## method execute
     # state execution
     def execute(self, userdata):
-        rospy.loginfo('Executing state NORMAL')
+        #rospy.loginfo('Executing state NORMAL')
+        sleep(1)
         pub_state.publish("normal")
         ## check if a voice command is received
         rospy.Subscriber("/voice_command", String, self.get_command)
         while not rospy.is_shutdown():  
-            sleep(2)
+            # wait for 2 seconds if a play command arrives
+            # sleep(1)
             if(self.command_received):
+                self.command_received = False
                 return 'play_command'
             else: 
-                # go to sleep at random (1/10 chances for each iteration)
-                if(random.randint(1,10) == 1):
-                    ## get the timescale parameter to adjust simulation speed
-                    timescale = rospy.get_param('timescale')
-                    ## wait random time
-                    sleep(timescale*random.randint(5,20))
+                # go to sleep at random (1/50 chances per second passed)
+                if(random.randint(1,5000) == 1):
                     return 'go_to_sleep'
-            self.rate.sleep
+            self.rate.sleep()
     
     def get_command(self, command):
         if(command.data=="play"):
@@ -68,18 +66,17 @@ class Sleep(smach.State):
     ## method execute
     # state execution
     def execute(self, userdata):
-        rospy.loginfo('Executing state SLEEP')
+        #rospy.loginfo('Executing state SLEEP')
         pub_state.publish("sleep")
-
+        ## get the timescale parameter to adjust simulation speed
+        timescale = rospy.get_param('timescale')
         rospy.Subscriber("/actual_position", IntList, self.get_position)
+
         while not rospy.is_shutdown():  
-            
             # check if the pet is in home position
             if(self.position == (rospy.get_param('home_x'),rospy.get_param('home_y'))):
-                ## get the timescale parameter to adjust simulation speed
-                timescale = rospy.get_param('timescale')
-                ## wait random time
-                sleep(timescale*random.randint(5,20))
+                ## wait some time to wake up
+                sleep(timescale*random.randint(30,60))
                 return 'wake_up'
             self.rate.sleep
         
@@ -96,13 +93,17 @@ class Play(smach.State):
         smach.State.__init__(self, 
                              outcomes=['stop_play'],
                             )
-        pub_state.publish("play")
+        
         
 
     ## method execute
     # state execution
     def execute(self,userdata):
-        rospy.loginfo('Executing state PLAY')
+        #rospy.loginfo('Executing state PLAY')
+        pub_state.publish("play")
+        timescale = rospy.get_param('timescale')
+        ## wait random time
+        sleep(timescale*random.randint(5,20))
         return 'stop_play'
 
     

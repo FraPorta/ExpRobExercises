@@ -9,18 +9,13 @@ from pet_behaviour.msg import IntList
 from std_msgs.msg import String
 
 
-pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=10)
-        
+behaviour = None
 
 ## Subscriber callback gets behaviour value
-#def check_behaviour(state):
-#    behaviour = state.data
-
-## gesture position publisher 
-def publish_position():
-    #if(behaviour == "play"):
-    pub_command.publish(get_random_position())
-
+def check_behaviour(state):
+    global behaviour
+    behaviour = state.data
+    
 ## get a random position on the map
 def get_random_position():
     randX = random.randint(0,rospy.get_param("map_dimension_x")) 
@@ -32,19 +27,22 @@ def get_random_position():
 def main():
     ## init node
     rospy.init_node('pointing_gesture_generator')
-
-    #rospy.Subscriber("/behaviour", String, check_behaviour)
-
+    rate = rospy.Rate(10)
+    pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=5)
+    rospy.Subscriber("/behaviour", String, check_behaviour)
+    
     ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
-    ## wait random time
-    sleep(timescale*random.randint(1,20))
 
-    ## publish position
-    publish_position()
+    while not rospy.is_shutdown():
+        ## wait random time
+        sleep(timescale*random.randint(15,60))
 
-    rospy.spin()
+        if(behaviour == "play"):
+            ## publish position
+            pub_command.publish(get_random_position())
 
+        rate.sleep()
 
 
 if __name__ == "__main__":

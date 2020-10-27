@@ -9,15 +9,7 @@ from std_msgs.msg import String
 
 ## voice command variable
 voice_command = "play"
-
-pub_command = rospy.Publisher("/voice_command", String, queue_size=10)
-
 behaviour = None
-
-## Command publisher 
-def publish_command():
-    if(behaviour == "normal"):
-        pub_command.publish(voice_command)
 
 ## Subscriber callback gets behaviour value
 def check_behaviour(state):
@@ -28,17 +20,21 @@ def check_behaviour(state):
 def main():
     ## init node
     rospy.init_node('voice_command_generator')
-
+    pub_command = rospy.Publisher("/voice_command", String, queue_size=5)
     rospy.Subscriber("/behaviour", String, check_behaviour)
-
+    rate = rospy.Rate(10)
     ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
-    ## wait random time
-    sleep(timescale*random.randint(30,40))
-    ## publish voice command
-    publish_command()
 
-    rospy.spin()
+    while not rospy.is_shutdown():
+        ## wait random time
+        sleep(timescale*random.randint(15,60))
+        
+        if(behaviour == "normal"):
+            ## publish voice command
+            pub_command.publish("play")
+
+        rate.sleep()
 
 
 

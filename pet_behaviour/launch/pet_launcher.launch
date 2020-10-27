@@ -1,18 +1,20 @@
 <launch>
 
-    <param name="timescale" value="0.5" />
+    <param name="timescale" value="0.25" />
     <param name="map_dimension_x" value="100" />
     <param name="map_dimension_y" value="100" />
     <param name="home_x" value="20" />
     <param name="home_y" value="40" />
+    <param name="person_x" value="77" />
+    <param name="person_y" value="66" />
 
     <node pkg="pet_behaviour" type="voice_command_gen.py" name="voice_command_generator" output="screen">
     </node>
     <node pkg="pet_behaviour" type="pointing_gesture_gen.py" name="pointing_gesture_generator" output="screen">
     </node>
+     <node pkg="pet_behaviour" type="motion_controller.py" name="motion_controller" output="screen">
+    </node>
     <node pkg="pet_behaviour" type="behaviour_controller.py" name="behaviour_controller" output="screen">
     </node>
-    <node pkg="pet_behaviour" type="motion_controller.py" name="motion_controller" output="screen">
-    </node>
-    
+   
 </launch>
