@@ -27,7 +27,7 @@ def get_random_position():
 def main():
     ## init node
     rospy.init_node('pointing_gesture_generator')
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(100)
     pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=5)
     rospy.Subscriber("/behaviour", String, check_behaviour)
     

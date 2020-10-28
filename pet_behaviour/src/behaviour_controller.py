@@ -30,13 +30,12 @@ class Normal(smach.State):
     # state execution
     def execute(self, userdata):
         #rospy.loginfo('Executing state NORMAL')
+        # wait for initialization
         sleep(1)
         pub_state.publish("normal")
         ## check if a voice command is received
         rospy.Subscriber("/voice_command", String, self.get_command)
         while not rospy.is_shutdown():  
-            # wait for 2 seconds if a play command arrives
-            # sleep(1)
             if(self.command_received):
                 self.command_received = False
                 return 'play_command'
@@ -93,8 +92,8 @@ class Play(smach.State):
         smach.State.__init__(self, 
                              outcomes=['stop_play'],
                             )
-        
-        
+        self.position = [-1,-1]
+        self.rate = rospy.Rate(1)
 
     ## method execute
     # state execution
@@ -102,9 +101,22 @@ class Play(smach.State):
         #rospy.loginfo('Executing state PLAY')
         pub_state.publish("play")
         timescale = rospy.get_param('timescale')
-        ## wait random time
-        sleep(timescale*random.randint(5,20))
+        
+        rospy.Subscriber("/actual_position", IntList, self.get_position)
+
+        #while not rospy.is_shutdown():  
+            ## wait some time 
+        sleep(timescale*random.randint(60,120))
+            ## check if the pet is in person position
+            #if(self.position == (rospy.get_param('person_x'),rospy.get_param('person_y'))):
         return 'stop_play'
+            #rospy.sleep()
+        
+
+    ## method get_position
+    # subscriber callback, gets actual position of the robot
+    def get_position(self,position):
+        self.position = position.data
 
     
 

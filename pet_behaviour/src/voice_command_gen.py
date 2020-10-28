@@ -22,7 +22,7 @@ def main():
     rospy.init_node('voice_command_generator')
     pub_command = rospy.Publisher("/voice_command", String, queue_size=5)
     rospy.Subscriber("/behaviour", String, check_behaviour)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(100)
     ## get the timescale parameter to adjust simulation speed
     timescale = rospy.get_param('timescale')
 

@@ -1,6 +1,6 @@
 <launch>
 
-    <param name="timescale" value="0.25" />
+    <param name="timescale" value="0.5" />
     <param name="map_dimension_x" value="100" />
     <param name="map_dimension_y" value="100" />
     <param name="home_x" value="20" />
