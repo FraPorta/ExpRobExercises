@@ -1,0 +1,7 @@
+<launch>
+    <group>
+        <param name="timescale" value="0.5" />
+        <include file="$(find pet_behaviour)/launch/simulator.launch" />
+        <include file="$(find pet_behaviour)/launch/pet_launcher.launch" />
+    </group>
+</launch>  

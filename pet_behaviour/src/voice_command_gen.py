@@ -30,9 +30,9 @@ def main():
         ## wait random time
         rospy.sleep(timescale*random.randint(15,120))
         
-        #if(behaviour == "normal"):
-        ## publish voice command
-        pub_command.publish("play")
+        if(behaviour == "normal"):
+            ## publish voice command
+            pub_command.publish("play")
 
         rate.sleep()
 

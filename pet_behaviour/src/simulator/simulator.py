@@ -49,29 +49,40 @@ def update_info():
     global user_action
     global voice_command
     global goal
-    
+    init_time = rospy.Time().now()
+    timescale = rospy.get_param('timescale')
+
     while not rospy.is_shutdown():
+        
+        
         if(robot_changed):
+            now = rospy.Time.now()
+            print("Simulation time elapsed: "+ str((now.secs - init_time.secs)/timescale)+" seconds")
+            print("Real time elapsed: "+ str(now.secs - init_time.secs)+" seconds\n")
             print("ROBOT:")
             print("Behaviour: " + behaviour)
             print("Actual position: " + str(actual_position))
             if (actual_position == (rospy.get_param('home_x'),rospy.get_param('home_y'))):
                 print("Pet is at home!")
             if (actual_position == (rospy.get_param('person_x'),rospy.get_param('person_y'))):
-                print("Pet is near the user waiting for a pointing position!")
+                if(behaviour == "play"):
+                    print("Pet is near the user waiting for a pointing position!")
+                else:
+                    print("Pet is near the user!")
             print("\n=============================================================\n")
             robot_changed = False
-
+        
         if(user_action):
             print("USER:")
             if not (voice_command == "None"):
                 print("User says: 'Play!'")
+                voice_command = "None"
             if not (goal == ["--","--"]):
                 print("User points to: " + str(goal))
+                goal = ["--","--"]
             print("\n=============================================================\n")
             user_action = False
-            voice_command = "None"
-            goal == ["--","--"]
+            
         rospy.Rate(100).sleep()
 
 

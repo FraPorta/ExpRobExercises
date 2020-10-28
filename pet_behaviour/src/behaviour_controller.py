@@ -30,7 +30,7 @@ class Normal(smach.State):
     def execute(self, userdata):
         #rospy.loginfo('Executing state NORMAL')
         # wait for initialization
-        rospy.sleep(1)
+        #rospy.sleep(1)
         pub_state.publish("normal")
         ## check if a voice command is received
         rospy.Subscriber("/voice_command", String, self.get_command)
@@ -104,13 +104,9 @@ class Play(smach.State):
         
         rospy.Subscriber("/actual_position", IntList, self.get_position)
 
-        #while not rospy.is_shutdown():  
-            ## wait some time 
         rospy.sleep(timescale*random.randint(60,120))
-            ## check if the pet is in person position
-            #if(self.position == (rospy.get_param('person_x'),rospy.get_param('person_y'))):
         return 'stop_play'
-            #rospy.sleep()
+            
         
 
     ## method get_position
@@ -126,7 +122,6 @@ def main():
 
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['container_interface'])
-    #sm.userdata.sm_counter = 0
 
     # Open the container
     with sm:

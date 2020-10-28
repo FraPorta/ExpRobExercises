@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="pet_behaviour" type="simulator.py" name="simulator" output="screen">
+    </node>
+    <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer" output="log">
+    </node>
+</launch>
