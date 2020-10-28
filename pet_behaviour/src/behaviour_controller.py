@@ -6,7 +6,6 @@
 import rospy
 import smach
 import smach_ros
-from time import sleep
 import random
 from std_msgs.msg import String
 from pet_behaviour.msg import IntList
@@ -31,10 +30,11 @@ class Normal(smach.State):
     def execute(self, userdata):
         #rospy.loginfo('Executing state NORMAL')
         # wait for initialization
-        sleep(1)
+        rospy.sleep(1)
         pub_state.publish("normal")
         ## check if a voice command is received
         rospy.Subscriber("/voice_command", String, self.get_command)
+        
         while not rospy.is_shutdown():  
             if(self.command_received):
                 self.command_received = False
@@ -75,7 +75,7 @@ class Sleep(smach.State):
             # check if the pet is in home position
             if(self.position == (rospy.get_param('home_x'),rospy.get_param('home_y'))):
                 ## wait some time to wake up
-                sleep(timescale*random.randint(30,60))
+                rospy.sleep(timescale*random.randint(30,60))
                 return 'wake_up'
             self.rate.sleep
         
@@ -106,7 +106,7 @@ class Play(smach.State):
 
         #while not rospy.is_shutdown():  
             ## wait some time 
-        sleep(timescale*random.randint(60,120))
+        rospy.sleep(timescale*random.randint(60,120))
             ## check if the pet is in person position
             #if(self.position == (rospy.get_param('person_x'),rospy.get_param('person_y'))):
         return 'stop_play'

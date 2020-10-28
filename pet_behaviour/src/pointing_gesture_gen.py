@@ -1,13 +1,12 @@
 #!/usr/bin/env python
+
 ## @package pointing_gesture_gen
 # a pointing gesture generator (a IntList) with random delays
  
 import rospy
 import random
-from time import sleep
 from pet_behaviour.msg import IntList
 from std_msgs.msg import String
-
 
 behaviour = None
 
@@ -28,7 +27,7 @@ def main():
     ## init node
     rospy.init_node('pointing_gesture_generator')
     rate = rospy.Rate(100)
-    pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=5)
+    pub_command = rospy.Publisher("/pointing_position", IntList, queue_size=1)
     rospy.Subscriber("/behaviour", String, check_behaviour)
     
     ## get the timescale parameter to adjust simulation speed
@@ -36,11 +35,11 @@ def main():
 
     while not rospy.is_shutdown():
         ## wait random time
-        sleep(timescale*random.randint(15,60))
+        rospy.sleep(timescale*random.randint(15,120))
 
-        if(behaviour == "play"):
-            ## publish position
-            pub_command.publish(get_random_position())
+        #if(behaviour == "play"):
+        ## publish position
+        pub_command.publish(get_random_position())
 
         rate.sleep()
 

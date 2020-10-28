@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+
 ## @package voice_command_gen
 # a voice command generator (a string) with random delays
 
 import rospy
 import random
-from time import sleep
 from std_msgs.msg import String
 
 ## voice command variable
@@ -28,11 +28,11 @@ def main():
 
     while not rospy.is_shutdown():
         ## wait random time
-        sleep(timescale*random.randint(15,60))
+        rospy.sleep(timescale*random.randint(15,120))
         
-        if(behaviour == "normal"):
-            ## publish voice command
-            pub_command.publish("play")
+        #if(behaviour == "normal"):
+        ## publish voice command
+        pub_command.publish("play")
 
         rate.sleep()
 
