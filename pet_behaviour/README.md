@@ -1,10 +1,27 @@
 
+# Assignment 1 Experimental Robotics - Pet Behaviour Architecture
+
 ## Author
 * Francesco Porta: francy857@gmail.com
 
+## Architecture
+This is the main architecture of the pet robot control
 <p align="center"> 
-<img src="https://github.com/FraPorta/Itslit/blob/master/ExperimenterDiagram.jpg?raw=true">
+<img src="https://github.com/FraPorta/Itslit/blob/master/pet_behaviour_architecture.png?raw=true">
 </p>
+
+## State Machine
+This is the state machine inside the Behaviour Controller component
+<p align="center"> 
+<img src="https://github.com/FraPorta/Itslit/blob/master/state_diagram.png?raw=true">
+</p>
+
+### Components
+* Behaviour Controller
+* Pointing Gesture Generator
+* Voice Command Generator
+* Motion Controller
+
 
 ## Contents of the repository
 ### Launch
@@ -31,10 +48,15 @@ To run the system:
     
     ```
 
-# Rqt_graph
+## Rqt_graphs
+### Main Architecture Only
 <p align="center"> 
-<img src="">
+<img src="https://github.com/FraPorta/Itslit/blob/master/rosgraph_pet.png?raw=true">
 </p>
 
-### Modules
-* Behaviour Controller Module
+### Main Architecture and Simulator
+<p align="center"> 
+<img src="https://github.com/FraPorta/Itslit/blob/master/rosgraph_simulator.png?raw=true">
+</p>
+
+
