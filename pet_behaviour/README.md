@@ -2,25 +2,41 @@
 # Assignment 1 Experimental Robotics - Pet Behaviour Architecture
 
 ## Author
-* Francesco Porta: francy857@gmail.com
+* Francesco Porta: francy857@gmail.com, ID: 4376330
+  
 
-## Architecture
-This is the main architecture of the pet robot control
+## Introduction
+This architecture is meant to simulate a Pet Robot moving on a Map with three different behaviours, Normal, Sleep and Play. It is controlled by a user who can perform two actions: a voice command to make the Pet play and a pointing gesture to make the pet go to the pointed position while it is in the Play behaviour. The User is simulated by the software
+
+## Software architecture and state diagram
+### Architecture
+
 <p align="center"> 
 <img src="https://github.com/FraPorta/Itslit/blob/master/pet_behaviour_architecture.png?raw=true">
 </p>
 
-## State Machine
+#### Components
+* Behaviour Controller
+* Pointing Gesture Generator
+* Voice Command Generator
+* Motion Controller
+
+#### Description
+This is the main architecture of the pet robot control
+
+
+#### Ros messages and parameters
+
+### State Machine
 This is the state machine inside the Behaviour Controller component
 <p align="center"> 
 <img src="https://github.com/FraPorta/Itslit/blob/master/state_diagram.png?raw=true">
 </p>
 
-### Components
-* Behaviour Controller
-* Pointing Gesture Generator
-* Voice Command Generator
-* Motion Controller
+
+
+
+
 
 
 ## Contents of the repository
@@ -48,11 +64,15 @@ To run the system:
     
     ```
 
+
+
 ## Rqt_graphs
 ### Main Architecture Only
 <p align="center"> 
 <img src="https://github.com/FraPorta/Itslit/blob/master/rosgraph_pet.png?raw=true">
 </p>
+
+
 
 ### Main Architecture and Simulator
 <p align="center"> 
