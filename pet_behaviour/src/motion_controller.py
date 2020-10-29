@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-## @package motion controller
+## @package motion_controller
 # control the position of the pet in the map respecting the behaviour
 
 import rospy

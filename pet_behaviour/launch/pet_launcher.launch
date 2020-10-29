@@ -1,4 +1,5 @@
 <launch>
+    <param name="timescale" value="0.1" />
     <param name="map_dimension_x" value="100" />
     <param name="map_dimension_y" value="100" />
     <param name="home_x" value="20" />
@@ -12,7 +13,7 @@
     </node>
      <node pkg="pet_behaviour" type="motion_controller.py" name="motion_controller" output="screen">
     </node>
-    <node pkg="pet_behaviour" type="behaviour_controller.py" name="behaviour_controller" output="log">
+    <node pkg="pet_behaviour" type="behaviour_controller.py" name="behaviour_controller" output="screen">
     </node>
    
 </launch>

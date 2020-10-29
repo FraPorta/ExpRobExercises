@@ -28,7 +28,7 @@ def main():
 
     while not rospy.is_shutdown():
         ## wait random time
-        rospy.sleep(timescale*random.randint(15,120))
+        rospy.sleep(timescale*random.randint(60,240))
         
         if(behaviour == "normal"):
             ## publish voice command

@@ -36,13 +36,13 @@ class Normal(smach.State):
         rospy.Subscriber("/voice_command", String, self.get_command)
         
         while not rospy.is_shutdown():  
-            if(self.command_received):
-                self.command_received = False
-                return 'play_command'
-            else: 
-                # go to sleep at random (1/50 chances per second passed)
-                if(random.randint(1,5000) == 1):
+            # go to sleep at random (1/300 chances per iteration -> 100 iterations per second -> 1/3 chance per second passed in Normal state)
+            if(random.randint(1,300) == 1):
                     return 'go_to_sleep'
+            else:
+                if(self.command_received):
+                    self.command_received = False
+                    return 'play_command' 
             self.rate.sleep()
     
     def get_command(self, command):
