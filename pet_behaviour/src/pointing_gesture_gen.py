@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 ## @package pointing_gesture_gen
+#
 # a pointing gesture generator (a IntList) with random delays
  
 import rospy
@@ -10,19 +11,24 @@ from std_msgs.msg import String
 
 behaviour = None
 
-## Subscriber callback gets behaviour value
+## function check_behaviour
+# 
+# Subscriber callback gets behaviour value
 def check_behaviour(state):
     global behaviour
     behaviour = state.data
     
-## get a random position on the map
+## function get_random_position
+# 
+# get a random position on the map
 def get_random_position():
     randX = random.randint(0,rospy.get_param("map_dimension_x")) 
     randY = random.randint(0,rospy.get_param("map_dimension_y")) 
     randPos = [randX,randY]
     return randPos
         
-## main
+## function main
+#
 def main():
     ## init node
     rospy.init_node('pointing_gesture_generator')

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 ## @package motion_controller
+#
 # control the position of the pet in the map respecting the behaviour
 
 import rospy
@@ -18,25 +19,31 @@ home = False
 pub = rospy.Publisher("/actual_position",IntList,queue_size=5)
 sub = None
 
-## get a random position on the map
+## function get_random_position
+#
+# get a random position on the map
 def get_random_position():
     randX = random.randint(0,rospy.get_param("map_dimension_x")) 
     randY = random.randint(0,rospy.get_param("map_dimension_y")) 
     randPos = [randX,randY]
     return randPos
 
-## subscriber callback position
+## function get_position
+#
+# subscriber callback position
 def get_position(position):
     global goal_position
     goal_position = position.data
     
-## method get_behaviour
+## function get_behaviour
+#
 # subscriber callback to the behaviour topic
 def get_behaviour(state):
     global behaviour
     behaviour = state.data
 
-## method move_normal
+## function move_normal
+#
 # movement in the NORMAL state
 def move_normal():
     ## move randomly on the map
@@ -46,7 +53,8 @@ def move_normal():
     ## wait random time to simulate reaching the point
     rospy.sleep(timescale*random.randint(5,15))
 
-## method move_sleep
+## function move_sleep
+#
 # movement in the SLEEP state
 def move_sleep():
     global home
@@ -58,14 +66,16 @@ def move_sleep():
         home = True
     
         
-## method move_to_person
+## function move_to_person
+#
 # movement in the PLAY state
 def move_to_person():
     ## go to the person position and waits for a pointing position 
     rospy.sleep(timescale*random.randint(5,15))
     pet_map.updateMap(rospy.get_param("person_x"),rospy.get_param("person_y"))
 
-## method move_to_goal
+## function move_to_goal
+#
 # move to the point given by the user
 def move_to_goal():    
     ## go to the pointed position 
@@ -77,11 +87,12 @@ def move_to_goal():
 
 
 ## main function
+#
 def main():
     rospy.init_node("motion_controller")
     ## subscribers
     rospy.Subscriber("/behaviour",String, get_behaviour)
-    sub = rospy.Subscriber("/pointing_position",IntList, get_position)
+    rospy.Subscriber("/pointing_position",IntList, get_position)
     
     rate = rospy.Rate(100)
     global home

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 ## @package voice_command_gen
+#
 # a voice command generator (a string) with random delays
 
 import rospy
@@ -11,12 +12,15 @@ from std_msgs.msg import String
 voice_command = "play"
 behaviour = None
 
-## Subscriber callback gets behaviour value
+## function check_behaviour
+#
+# Subscriber callback gets behaviour value
 def check_behaviour(state):
     global behaviour
     behaviour = state.data
 
-## main
+## function main
+#
 def main():
     ## init node
     rospy.init_node('voice_command_generator')

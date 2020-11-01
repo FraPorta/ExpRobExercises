@@ -1,6 +1,7 @@
 import rospy
 
 ## class Map
+#
 # Map structure definition and functions
 class PetMap():
     ## The constructor
