@@ -16,16 +16,39 @@ This architecture is meant to simulate a Pet Robot moving on a Map with three di
 </p>
 
 #### Components
-* Behaviour Controller
 * Pointing Gesture Generator
 * Voice Command Generator
+* Behaviour Controller
 * Motion Controller
 
 #### Description
-This is the main architecture of the pet robot control
+The main architecture is composed by four components, two that are related to the robot control (one for the behaviour and one for the movement in the map) and two that represents the user who gives commands to the robot (voice commands and pointing gestures). 
 
+The Pointing Gesture Generator component simulates a User who sends a pointing position to the Motion controller at random intervals, using a Ros message. It is coded to simulate a "stupid" user who doesn't wait for the pet to be able to accomplish its request, but sends the positions totally randomly. During the developement the component was initially coded to publish messages only when the pet's behaviour was in play, then I modified it for testing purpouses, making it completely random.
 
-#### Ros messages and parameters
+The Voice Command Generator component simulates a User who gives voice commands to the robot at random intervals, using a Ros message. It uses the same assumptions and development sequence of the other User component.
+
+The Behaviour Controller component contains the finite state machine and is responsible of changing the bahviour of the pet publishing the state on a topic every time it changes, so that the other components change their behaviour accordingly. The three behaviours are: Normal (which is the initial one) , Sleep and Play. The details will be covered in the State Machine section. It subscribes to the Voice Command topic in order to change from the Normal to the Play state.
+
+The Motion Controller component simulates the robot movements with corresponding random delays according to the current state of the state machine, retrieved from the behaviour topic. It also instantiates the Map and send on a topic the actual position of the robot every time it changes. 
+In the Normal state, simulates the pet moving randomly on the Map. 
+In the Sleep state it simulates the pet moving to the home position, and stay there until the state return to Normal.
+In the Play state, it simulates the pet going to the position of the user, waiting for a pointing position, and then reaching it. 
+
+#### Ros Parameters
+* timescale -> parameter used to scale the simulation speed
+* map_dimension_x -> total x of the map
+* map_dimension_y -> total y of the map 
+* home_x -> home x position on the map
+* home_y -> home y position on the map
+* person_x -> user x position on the map
+* person_y -> user y position on the map
+
+#### Ros Messages
+* /behaviour
+* /voice_command
+* /pointing_position
+* /actual_position
 
 ### State Machine
 This is the state machine inside the Behaviour Controller component
