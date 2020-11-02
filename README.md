@@ -1,7 +1,8 @@
 # Assignment 1 Experimental Robotics - Pet Behaviour Architecture
 
 ## Author
-* Francesco Porta: francy857@gmail.com, ID: 4376330
+Francesco Porta: francy857@gmail.com
+ID: 4376330
   
 
 ## Introduction
@@ -35,19 +36,19 @@ In the Sleep state it simulates the pet moving to the home position, and stay th
 In the Play state, it simulates the pet going to the position of the user, waiting for a pointing position, and then reaching it. 
 
 #### Ros Parameters
-* timescale -> parameter used to scale the simulation speed
-* map_dimension_x -> total x of the map
-* map_dimension_y -> total y of the map 
-* home_x -> home x position on the map
-* home_y -> home y position on the map
-* person_x -> user x position on the map
-* person_y -> user y position on the map
+* timescale &rarr; parameter used to scale the simulation speed
+* map_dimension_x &rarr; total x of the map
+* map_dimension_y &rarr; total y of the map 
+* home_x &rarr; home x position on the map
+* home_y &rarr; home y position on the map
+* person_x &rarr; user x position on the map
+* person_y &rarr; user y position on the map
 
 #### Ros Messages
-* /behaviour -> topic on which the current behaviour is published when modified
-* /voice_command -> topic on which the user voice command is published
-* /pointing_position -> topic on which the user pointing position is published
-* /actual_position -> topic on which the pet actual is published
+* /behaviour &rarr; topic on which the current behaviour is published when modified
+* /voice_command &rarr; topic on which the user voice command is published
+* /pointing_position &rarr; topic on which the user pointing position is published
+* /actual_position &rarr; topic on which the pet actual is published
 
 ### State Machine
 This is the state machine inside the Behaviour Controller component
