@@ -78,20 +78,20 @@ Contains the html documentation of the project (in order to see it, open the *in
 ## Installation and running procedure
 The first thing to do, after having cloned the repository in the Ros workspace, is to build the package and install in order to make the ‘msg’ files executable, using the following commands in the workspace:
     
-    ```bash
-    catkin_make
-    ```
+```console
+catkin_make
+```
 You can run the whole system, including the main architecture and the simulator, with this command:
     
-    ```bash
-    roslaunch pet_behaviour_ pet_and_simulator.launch 
-    ```
+```console
+roslaunch pet_behaviour_ pet_and_simulator.launch 
+```
 Otherwise you can run separately the main architecture and the simulator using two commands:
 
-    ```bash
-    roslaunch pet_behaviour_ pet_launcher.launch 
-    roslaunch pet_behaviour_ simulator.launch 
-    ```
+```console
+roslaunch pet_behaviour_ pet_launcher.launch 
+roslaunch pet_behaviour_ simulator.launch 
+```
 You can modify the simulation speed by changing the timescale parameter in the two launchfiles above (example: timescale = 0.5 -> simulation time halved)
 
 ## Rqt_graphs
