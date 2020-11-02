@@ -1,6 +1,6 @@
 <launch>
     <group>
-        <include file="$(find pet_behaviour)/launch/simulator.launch" />
-        <include file="$(find pet_behaviour)/launch/pet_launcher.launch" />
+        <include file="$(find pet_behaviour_)/launch/simulator.launch" />
+        <include file="$(find pet_behaviour_)/launch/pet_launcher.launch" />
     </group>
 </launch>  

@@ -38,8 +38,8 @@ class Normal(smach.State):
         rospy.Subscriber("/voice_command", String, self.get_command)
         
         while not rospy.is_shutdown():  
-            ## go to sleep at random (1/300 chances per iteration -> 100 iterations per second -> 1/3 chance per second passed in Normal state)
-            if(random.randint(1,300) == 1):
+            ## go to sleep at random (1/1000 chances per iteration -> 100 iterations per second -> 1/10 chance per second passed in Normal state)
+            if(random.randint(1,1000) == 1):
                     return 'go_to_sleep'
             else:
                 if(self.command_received):
