@@ -80,7 +80,6 @@ The first thing to do, after having cloned the repository in the Ros workspace, 
     
     ```
     catkin_make
-
     ```
 You can run the whole system, including the main architecture and the simulator, with this command:
     
