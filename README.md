@@ -1,11 +1,5 @@
 # Assignment 1 Experimental Robotics - Pet Behaviour Architecture
 
-## Author
-Francesco Porta\
-E-mail: francy857@gmail.com\
-ID: 4376330
-  
-
 ## Introduction
 This architecture is meant to simulate a Pet Robot moving on a Map with three different behaviours, Normal, Sleep and Play. It is controlled by a user who can perform two actions: a voice command to make the Pet play and a pointing gesture to make the pet go to the pointed position while it is in the Play behaviour. The User is simulated by the software
 
@@ -25,15 +19,15 @@ This architecture is meant to simulate a Pet Robot moving on a Map with three di
 #### Description
 The main architecture is composed by four components, two that are related to the robot control (one for the behaviour and one for the movement in the map) and two that represents the user who gives commands to the robot (voice commands and pointing gestures). 
 
-The **Pointing Gesture Generator** component simulates a User who sends a pointing position to the Motion controller at random intervals, using a Ros message. It is coded to simulate a "stupid" user who doesn't wait for the pet to be able to accomplish its request, but sends the positions totally randomly. During the developement the component was initially coded to publish messages only when the pet's behaviour was in play, then I modified it for testing purpouses, making it completely random.
+The **Pointing Gesture Generator** component simulates a User who sends a pointing position to the Motion controller at random intervals, using a Ros message. It is coded in order to simulate a "stupid" user who doesn't wait for the pet to be able to accomplish its request, but sends the positions totally randomly. During the developement the component was initially coded to publish messages only when the pet's behaviour was in Play, then I modified it for testing purpouses, making it completely random.
 
 The **Voice Command Generator** component simulates a User who gives voice commands to the robot at random intervals, using a Ros message. It uses the same assumptions and development sequence of the other User component.
 
-The **Behaviour Controller** component contains the finite state machine and is responsible of changing the bahviour of the pet publishing the state on a topic every time it changes, so that the other components change their behaviour accordingly. The three behaviours are: Normal (which is the initial one) , Sleep and Play. The details will be covered in the State Machine section. It subscribes to the Voice Command topic in order to change from the Normal to the Play state.
+The **Behaviour Controller** component contains the finite state machine and is responsible of changing the behaviour of the pet publishing the state on a topic every time it changes, so that the other components change their behaviour accordingly. The three behaviours are: Normal (which is the initial one), Sleep and Play. The details will be covered in the State Machine section. It subscribes to the Voice Command topic in order to change from the Normal to the Play state.
 
-The **Motion Controller** component simulates the robot movements with corresponding random delays according to the current state of the state machine, retrieved from the behaviour topic. It also instantiates the Map and send on a topic the actual position of the robot every time it changes. 
-In the Normal state, simulates the pet moving randomly on the Map. 
-In the Sleep state it simulates the pet moving to the home position, and stay there until the state return to Normal.
+The **Motion Controller** component simulates the robot movements with corresponding random delays according to the current state of the state machine, retrieved from the behaviour topic. It also instantiates the Map and send on a topic the actual position of the robot every time it changes.\
+In the Normal state, it simulates the pet moving randomly on the Map.\ 
+In the Sleep state it simulates the pet moving to the home position, and staying there until the state return to Normal.\
 In the Play state, it simulates the pet going to the position of the user, waiting for a pointing position, and then reaching it. 
 
 #### Simulator
@@ -60,11 +54,11 @@ This is the state machine inside the Behaviour Controller component
 <img src="https://github.com/FraPorta/Itslit/blob/master/state_diagram.png?raw=true">
 </p>
 
-The **Normal** behaviour consists in moving randomly around the map. When it is in this state the robot continuously listens to voice commands and if a 'play' command is received it shifts to the play behaviour, otherwise it can randomly go to the Sleep state after some time.
+The **Normal** behaviour consists in moving randomly around the map. When it is in this state the robot continuously listens to voice commands and if a 'play' command is received it shifts to the Play behaviour, otherwise it can randomly go to the Sleep state after some time.
 
 The **Sleep** behaviour consists in going to the home position and staying there for some time. The transition to the Normal state happens after a random time period (30-60 seconds), that starts after the robot has reached the home position.
 
-The **Play** behaviour is the most complex, but the State Machine part is very simple because the transition back to the Normal state is triggered simply after a randoma time period has passed (60-120 seconds). The motion part, controlled by the Motion Controller component, consists in going to the Person, waiting for the next pointed position given by the User, going there, and repeat this pattern until the state changes.
+The **Play** behaviour is the most complex, but the State Machine part is very simple because the transition back to the Normal state is triggered simply after a random time period has passed (between 60-120 seconds). The motion part, controlled by the Motion Controller component, consists in going to the person position, waiting for the next pointed position given by the User, going there, and then repeat this pattern until the state changes.
 
 
 ## Contents of the repository
@@ -79,7 +73,7 @@ Contains the PetMap class, which is used to keep the position of the robot updat
 #### Simulator
 Contains the simulator python file
 ### Documentation
-Contains the html documentation of the project (in order to see it, open the *index.html* file in a web browser)
+Contains the html documentation of the project (in order to see it, open the *index.html* file in a web browser like Chrome or Firefox)
 ## Installation and running procedure
 The first thing to do, after having cloned the repository in the Ros workspace, is to build the package and install it, using the following commands in the workspace:
     
@@ -102,7 +96,8 @@ You can modify the simulation speed by changing the timescale parameter in the t
 The simulator launchfile also contains the Smach_viewer launch which allows to visualize better the current state and the transitions between states.
 
 ## Working hypothesis and environment
-The main working hypotesis that conditionates all the project is that the robot and the user are purely and simply simulated by software components: for the user the voice commands and the pointing gestures are simply represented by Ros messages sent at random, for the robot the movements on the map are only a random sleep time and a couple of int values that represent its position on the map, updated when the sleep time is over. Also the map is simulated using a couple of int values for the total length and width and a couple of values for each important position on the map (home, user, robot).
+The main working hypotesis that influences all the project is that the robot and the user are purely and simply simulated by software components: for the user the voice commands and the pointing gestures are simply represented by Ros messages sent at random, for the robot the movements on the map are only a random sleep time and a couple of int values that represent its position on the map, updated when the sleep time is over.\
+Moreover the map is simulated using a couple of int values for the total length and width and a couple of values for each important position on the map (home, user, robot).
 
 ## System’s features
 The main feature of the system is the state machine which controls the behaviour of the pet, which is coded in such a way that it can be used also in a more complex and close to reality application.\
@@ -115,7 +110,7 @@ If the pet is in the Normal state and the behaviour changes, it has to first rea
 When user commands arrive in a moment where the robot can not handle it, like when it is Sleeping or moving to a pointed gesture or towards the user in the Play state, the architecture sinply ignores them.
 
 ## Possible technical improvements
-If we consider the working hypotesis and the actual scenario not changing, I think that the part that can be improved consistenly is the motion controller and the simulator, which are very basic, as the specifications required, and they should be changed drastically in order to resemble a real robot behaviour: in fact, for the time being, the pet movements are not really simulated. A little adjustment that could be made without overturning the whole project, is to make the waiting times for the robot movements proportional to the distance that the robot has to cover, in order to have a more realistic feeling of the behaviour of the architecture in a real scenario, specifically from the point of view of the State Machine which is actually the core of this project.
+If we consider the working hypotesis and the actual scenario not changing, I think that the part that can be improved consistenly is the motion controller and the simulator, which are very basic, as the specifications required, and they should be changed drastically in order to resemble a real robot behaviour: in fact, for the time being, the pet movements are not really simulated. A little adjustment that could be made without overturning the whole project is to make the waiting times for the robot movements proportional to the distance that the robot has to cover, in order to have a more realistic feeling of the behaviour of the architecture in a real scenario, specifically from the point of view of the State Machine which is actually the core of this project.
 Moreover, also the simulator node can be improved in order to show the actual movement of the robot, instead of only showing when a point is reached.\
 User commands that are ignored in this version of the archtiecture can be for example stored and executed when it will be possible for the robot.
 
@@ -134,4 +129,9 @@ User commands that are ignored in this version of the archtiecture can be for ex
 <img src="https://github.com/FraPorta/Itslit/blob/master/rosgraph_simulator.png?raw=true">
 </p>
 
+## Author
+Francesco Porta\
+E-mail: francy857@gmail.com\
+ID: 4376330
+  
 
