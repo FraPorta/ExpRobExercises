@@ -81,10 +81,11 @@ Contains the simulator python file
 ### Documentation
 Contains the html documentation of the project (in order to see it, open the *index.html* file in a web browser)
 ## Installation and running procedure
-The first thing to do, after having cloned the repository in the Ros workspace, is to build the package and install in order to make the ‘msg’ files executable, using the following commands in the workspace:
+The first thing to do, after having cloned the repository in the Ros workspace, is to build the package and install it, using the following commands in the workspace:
     
 ```console
 catkin_make
+catkin_make install
 ```
 You can run the whole system, including the main architecture and the simulator, with this command:
     
@@ -101,7 +102,7 @@ You can modify the simulation speed by changing the timescale parameter in the t
 The simulator launchfile also contains the Smach_viewer launch which allows to visualize better the current state and the transitions between states.
 
 ## Working hypothesis and environment
-The main working hypotesys that conditionate all the project is that the robot and the user are purely and simply simulated by software components: for the user the voice commands and the pointing gestures are simply represented by Ros messages sent at random, for the robot the movements on the map are only a random sleep time and a couple of int values that represent its position on the map, updated when the sleep time is over. Also the map is simulated using a couple of int values for the total length and width and a couple of values for each important position on the map (home, user, robot).
+The main working hypotesis that conditionates all the project is that the robot and the user are purely and simply simulated by software components: for the user the voice commands and the pointing gestures are simply represented by Ros messages sent at random, for the robot the movements on the map are only a random sleep time and a couple of int values that represent its position on the map, updated when the sleep time is over. Also the map is simulated using a couple of int values for the total length and width and a couple of values for each important position on the map (home, user, robot).
 
 ## System’s features
 The main feature of the system is the state machine which controls the behaviour of the pet, which is coded in such a way that it can be used also in a more complex and close to reality application.\
