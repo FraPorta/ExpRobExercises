@@ -1,7 +1,8 @@
 # Assignment 1 Experimental Robotics - Pet Behaviour Architecture
 
 ## Author
-Francesco Porta: francy857@gmail.com
+Francesco Porta\
+E-mail: francy857@gmail.com\
 ID: 4376330
   
 
@@ -90,10 +91,30 @@ roslaunch pet_behaviour_ pet_and_simulator.launch
 Otherwise you can run separately the main architecture and the simulator using two commands:
 
 ```console
+roslaunch pet_behaviour_ simulator.launch
 roslaunch pet_behaviour_ pet_launcher.launch 
-roslaunch pet_behaviour_ simulator.launch 
 ```
 You can modify the simulation speed by changing the timescale parameter in the two launchfiles above (example: timescale = 0.5 -> simulation time halved)
+The simulator launchfile also contains the Smach_viewer launch which allows to visualize better the current state and the transitions between states.
+
+## Working hypothesis and environment
+The main working hypotesys that conditionate all the project is that the robot and the user are purely and simply simulated by software components: for the user the voice commands and the pointing gestures are simply represented by ros messages sent at random, for the robot the movements on the map are only a random sleep time and a couple of int values that represent its position on the map, updated when the sleep time is over. Also the map is simulated using a couple of int values for the total length and width and a couple of values for each important position on the map (home, user, robot).
+
+## System’s features
+The main feature of the system is the state machine which controls the behaviour of the pet, which is coded in such a way that it can be used also in a more complex and close to reality application.\
+Another feature is the fact that even simulating at a very high speed (like 100 times the real time) the system does not fail and, even if this is irrealistic, it works fine and it is possible to observe a lot of iterations in a short time that give an idea of the average behaviour of the pet. Doing this, it can be observed that even if the randomness of the system is quite high, the architecture does del with that well and does not make errors in retrieveng and executing the commands given by the user.
+
+## System’s limitations
+The user and home positions on the map are predefined before starting the architecture and they do not change during the execution.\
+The transition from Normal to Sleep behaviour can be improved, the probability of going to the Sleep state is not optimal because sometimes a long time passes before going to Sleep again, while some other times the robot goes to Sleep consecutively in a range of few seconds.\
+If the pet is in the Normal state and the behaviour changes, it has to first reach the position it was randomly going to before actually changing the behaviour and execute the next commands.\ 
+When user commands arrive in a moment where the robot can not handle it, like when it is Sleeping or moving to a pointed gesture or towards the user in the Play state, the architecture sinply ignores them.
+
+## Possible technical improvements
+
+User commands that are now ignored can be stored and executed when it will be possible for the robot.\
+The simulator can be improved in order to show the actual movement of the robot instead of only showing when a point is reached.\
+
 
 ## Rqt_graphs
 ### Main Architecture Only
